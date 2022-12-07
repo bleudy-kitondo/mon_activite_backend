@@ -1,7 +1,10 @@
 const http = require('http')
 const app = require('./express')
 require('dotenv').config()
+require('./connection/mongoose')
 const port = process.env.port
-http.createServer(app).listen(port, () => {
+const server = http.createServer(app)
+
+server.listen(port, () => {
   console.log('server started in port: ', port)
 })
