@@ -26,4 +26,4 @@ const groupSchema = mongoose.Schema({
   },
 })
 groupSchema.plugin(validator)
-module.exports = mongoose.model('Groupe', groupSchema)
+module.exports = mongoose.model('Group', groupSchema)
