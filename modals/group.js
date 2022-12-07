@@ -1,5 +1,11 @@
 const mongoose = require('mongoose')
+const validator = require('mongoose-unique-validator')
 const groupSchema = mongoose.Schema({
+  congregationId: {
+    type: mongoose.Schema.Types.ObjectId,
+    Ref: 'Congregation',
+    required: true,
+  },
   manager: {
     type: String,
     required: true,
@@ -13,6 +19,11 @@ const groupSchema = mongoose.Schema({
   meeting_day: {
     type: String,
   },
+  number: {
+    type: Number,
+    required: true,
+    unique: true,
+  },
 })
-
-module.exports = mongoose.Model('Groupe', groupSchema)
+groupSchema.plugin(validator)
+module.exports = mongoose.model('Groupe', groupSchema)
