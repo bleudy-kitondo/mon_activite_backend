@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const congregation = mongoose.Schema({
+const congregationSchema = mongoose.Schema({
   number: {
     type: Number,
     required: true,
@@ -8,8 +8,8 @@ const congregation = mongoose.Schema({
   },
   coordinator: {
     type: String,
-    resuired: true,
+    required: true,
   },
 })
 
-module.exports = mongoose.model('Congregation', congregation)
+module.exports = mongoose.model('Congregations', congregationSchema)
