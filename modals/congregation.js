@@ -12,4 +12,4 @@ const congregationSchema = mongoose.Schema({
   },
 })
 
-module.exports = mongoose.model('Congregations', congregationSchema)
+module.exports = mongoose.model('Congregation', congregationSchema)
