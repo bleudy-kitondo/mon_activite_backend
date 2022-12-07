@@ -10,6 +10,7 @@ exports.createproclamair = (request, response) => {
         numberOfCongreg,
         name,
         lastName,
+        status,
         sex,
         phoneNumber,
         birthYear,
@@ -27,6 +28,7 @@ exports.createproclamair = (request, response) => {
         birthYear,
         baptismalYear,
         picture,
+        status,
       })
       proclamair
         .save()
@@ -51,8 +53,20 @@ exports.getAllproclamair = (request, response) => {
 }
 exports.deleteProclamair = (request, response) => {
   Proclamiar.deleteOne({ _id: request.params.id })
-    .then(proclamair => {
+    .then(() => {
       response.status(200).json(`proclamair deleted`)
+    })
+    .catch(err => {
+      throw err
+    })
+}
+exports.updateProclamair = (request, response) => {
+  Proclamiar.updateOne(
+    { _id: request.params.id },
+    { ...request.body, _id: request.params.id },
+  )
+    .then(() => {
+      response.status(200).json(`proclamair updated`)
     })
     .catch(err => {
       throw err
