@@ -1,33 +1,41 @@
 const mongoose = require('mongoose')
 
-const rapportSchema = mongoose.Schema({
-  month: {
-    type: String,
-    required: true,
+const rapportSchema = mongoose.Schema(
+  {
+    proclamairId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Proclamair',
+      required: true,
+    },
+    month: {
+      type: String,
+      required: true,
+    },
+    year: {
+      type: String,
+      required: true,
+    },
+    publication: {
+      type: Number,
+    },
+    video: {
+      type: Number,
+    },
+    time: {
+      type: Number,
+      required: true,
+    },
+    visit: {
+      type: Number,
+    },
+    course: {
+      type: Number,
+    },
+    note: {
+      type: String,
+    },
   },
-  year: {
-    type: Number,
-    required: true,
-  },
-  publication: {
-    type: String,
-  },
-  video: {
-    type: String,
-  },
-  time: {
-    type: String,
-    required:true
-  },
-  visit: {
-    type: String,
-  },
-  course: {
-    type: String,
-  },
-  note: {
-    type: String,
-  },
-})
+  { timestamps: true },
+)
 
 module.exports = mongoose.model('Rapport', rapportSchema)
