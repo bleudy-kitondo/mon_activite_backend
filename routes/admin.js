@@ -4,5 +4,6 @@ const adminCtr = require('../controllers/adminCtr')
 router.post('/create', adminCtr.createAdmin)
 router.get('/find', adminCtr.findAllAdmin)
 router.delete('/delete/:id', adminCtr.deleteOneAdmin)
+router.post('/singin', adminCtr.signInAdmin)
 
 module.exports = router

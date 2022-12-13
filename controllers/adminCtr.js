@@ -1,5 +1,7 @@
 const Admin = require('../modals/admin')
 const bcrypt = require('bcrypt')
+const jwt = require('jwt-simple')
+require('dotenv').config()
 
 exports.findAllAdmin = (request, response) => {
   Admin.find()
@@ -44,4 +46,37 @@ exports.modifyOneAdmin = (request, response) => {
     .catch(err => {
       throw err
     })
+}
+
+exports.signInAdmin = (request, response) => {
+  Admin.findOne({ userName: request.body.userName }).then(admin => {
+    if (!admin) {
+      response.status(401).json(`nom d'utilisateur ou mot de passe incorrect`)
+    } else {
+      const jwt_payload = {
+        id: admin._id,
+        nom: admin.userName,
+        picture: admin.picture,
+      }
+      const token = jwt.encode(jwt_payload, process.env.password)
+      bcrypt
+        .compare(request.body.password, admin.password)
+        .then(valid => {
+          if (!valid) {
+            response.status(400).json(`mot de passe incorrect`)
+          } else {
+            delete admin.password
+            response.status(200).json({
+              adminId: admin._id,
+              token: `Bearer ${token}`,
+              userName: admin.userName,
+              picture: admin.picture,
+            })
+          }
+        })
+        .catch(err => {
+          throw err
+        })
+    }
+  })
 }
