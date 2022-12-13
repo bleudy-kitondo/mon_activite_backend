@@ -10,6 +10,7 @@ var opts = {}
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()
 opts.SecretOrKey = process.env.password
 
+
 passport.use(
   new JwtStrategy(opts, (jwt_payload, done) => {
     Proclamair.findOne({ id: jwt_payload.sub }, function (err, user) {
