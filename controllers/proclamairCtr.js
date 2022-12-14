@@ -111,7 +111,7 @@ exports.singinproclamair = (request, response) => {
   Proclamiar.findOne({ userName: request.body.userName })
     .then(proclamair => {
       if (!proclamair) {
-        response.status(400).json(`nom d'utilisateur  incorrect`)
+        response.status(400).json(`nom d'utilisateur  ou mot de passe incorrect`)
       } else {
         const jwt_payload = {
           id: proclamair._id,
@@ -132,7 +132,7 @@ exports.singinproclamair = (request, response) => {
           .compare(request.body.password, proclamair.password)
           .then(valid => {
             if (!valid) {
-              response.status(400).json(`mot de passe incorrect`)
+              response.status(400).json(`nom d'utilisateur ou mot de passe incorrect`)
             } else {
               delete proclamair.password
               response.status(200).json({

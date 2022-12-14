@@ -3,8 +3,8 @@ const Rapport = require('../modals/rapport')
 exports.sendOrFindRapport = async (request, response) => {
   await Rapport.findOne({
     $and: [
-      { year: { $eq: request.params.year } },
-      { month: { $eq: request.params.month } },
+      { year: { $eq: request.body.year } },
+      { month: { $eq: request.body.month } },
     ],
   })
     .then(rapport => {
