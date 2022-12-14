@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const rapportCtr = require('../controllers/rapportCtr')
+const rapportCtr = require('../controllers/reportCtr')
 
 router.get('/create', rapportCtr.sendOrFindRapport)
 router.get('/proclamair/:proclamairId', rapportCtr.getByProclamair)
