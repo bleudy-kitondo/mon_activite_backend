@@ -1,15 +1,15 @@
-const Rapport = require('../modals/rapport')
+const Report = require('../modals/report')
 
 exports.sendOrFindRapport = async (request, response) => {
-  await Rapport.findOne({
+  await Report.findOne({
     $and: [
       { year: { $eq: request.body.year } },
       { month: { $eq: request.body.month } },
       { proclamairId: { $eq: request.body.proclamairId } },
     ],
   })
-    .then(rapport => {
-      if (!rapport) {
+    .then(report => {
+      if (!report) {
         const {
           proclamairId,
           month,
@@ -21,7 +21,7 @@ exports.sendOrFindRapport = async (request, response) => {
           course,
           note,
         } = request.body
-        const newrapport = new Rapport({
+        const newrapport = new Report({
           proclamairId,
           month,
           year,
@@ -41,7 +41,7 @@ exports.sendOrFindRapport = async (request, response) => {
             throw err
           })
       } else {
-        response.status(200).json(`${rapport} exist`)
+        response.status(200).json(`${report} exist`)
       }
     })
     .catch(err => {
@@ -50,9 +50,9 @@ exports.sendOrFindRapport = async (request, response) => {
 }
 
 exports.getByProclamair = (request, response) => {
-  Rapport.find({ proclamairId: request.params.proclamairId })
-    .then(rapport => {
-      response.status(200).json(rapport)
+  Report.find({ proclamairId: request.params.proclamairId })
+    .then(report => {
+      response.status(200).json(report)
     })
     .catch(err => {
       throw err
@@ -60,9 +60,9 @@ exports.getByProclamair = (request, response) => {
 }
 
 exports.getByYear = (request, response) => {
-  Rapport.find({ year: request.params.year })
-    .then(rapport => {
-      response.status(200).json(rapport)
+  Report.find({ year: request.params.year })
+    .then(report => {
+      response.status(200).json(report)
     })
     .catch(err => {
       throw err
@@ -70,14 +70,14 @@ exports.getByYear = (request, response) => {
 }
 
 exports.getByYearAndMonth = (request, response) => {
-  Rapport.find({
+  Report.find({
     $and: [
       { year: { $eq: request.params.year } },
       { month: { $eq: request.params.month } },
     ],
   })
-    .then(rapport => {
-      response.status(200).json(rapport)
+    .then(report => {
+      response.status(200).json(report)
     })
     .catch(err => {
       throw err
@@ -85,7 +85,7 @@ exports.getByYearAndMonth = (request, response) => {
 }
 
 exports.deleteOneRapport = (request, response) => {
-  Rapport.deleteOne({ _id: request.params.id })
+  Report.deleteOne({ _id: request.params.id })
     .then(() => {
       response.status(200).json(`deleted`)
     })

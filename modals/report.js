@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const rapportSchema = mongoose.Schema(
+const reportSchema = mongoose.Schema(
   {
     proclamairId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -38,4 +38,4 @@ const rapportSchema = mongoose.Schema(
   { timestamps: true },
 )
 
-module.exports = mongoose.model('Rapport', rapportSchema)
+module.exports = mongoose.model('Report', reportSchema)
