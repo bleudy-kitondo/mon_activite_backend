@@ -4,9 +4,7 @@ exports.sendOrFindRapport = async (request, response) => {
   await Rapport.findOne({
     $and: [
       { year: { $eq: request.params.year } },
-      {
-        month: { $eq: request.params.month },
-      },
+      { month: { $eq: request.params.month } },
     ],
   })
     .then(rapport => {

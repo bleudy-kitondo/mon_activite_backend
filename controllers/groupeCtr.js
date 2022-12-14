@@ -1,16 +1,15 @@
 const Group = require('../modals/group')
 
 exports.createOrFind = (request, response) => {
-  Group.findOne({ number: request.params.number }).then(data => {
+  Group.findOne({
+    $and: [
+      { congregationId: { $eq: request.params.congregationId } },
+      { number: { $eq: request.params.number } },
+    ],
+  }).then(data => {
     if (!data) {
-      const {
-        congregationId,
-        manager,
-        assistant,
-        meeting_place,
-        meeting_day,
-        number,
-      } = request.body
+      const { congregationId, manager, assistant, meeting_place, meeting_day, number } =
+        request.body
       const group = new Group({
         congregationId,
         manager,
@@ -22,9 +21,7 @@ exports.createOrFind = (request, response) => {
       group
         .save()
         .then(group => {
-          response
-            .status(200)
-            .json({ message: 'succesfully created', data: group })
+          response.status(200).json({ message: 'succesfully created', data: group })
         })
         .catch(err => {
           throw err
@@ -34,13 +31,23 @@ exports.createOrFind = (request, response) => {
     }
   })
 }
-exports.getgroup = (request, response) => {
+
+exports.getgroup = (response) => {
   Group.find()
     .then(data => {
       response.status(200).json(data)
     })
     .catch(err => console.log(err))
 }
+
+exports.getBycongregationId = (request, response) =>{
+  Group.find({congregationId: request.params.congregationId})
+  .then(group =>{
+    response.status(200).json(group)
+  })
+  .catch(err => console.log("err:",err))
+}
+
 exports.deleteGroup = (request, response) => {
   Group.deleteOne({ _id: request.params.id })
     .then(() => {
@@ -50,10 +57,7 @@ exports.deleteGroup = (request, response) => {
 }
 
 exports.updateGroup = (request, response) => {
-  Group.updateOne(
-    { _id: request.params.id },
-    { ...request.body, _id: request.params.id },
-  )
+  Group.updateOne({ _id: request.params.id }, { ...request.body, _id: request.params.id })
     .then(() => {
       response.status(200).json(`group updated`)
     })

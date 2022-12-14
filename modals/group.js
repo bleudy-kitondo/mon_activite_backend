@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const validator = require('mongoose-unique-validator')
 const groupSchema = mongoose.Schema({
   congregationId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -22,8 +21,6 @@ const groupSchema = mongoose.Schema({
   number: {
     type: Number,
     required: true,
-    unique: true,
   },
 })
-groupSchema.plugin(validator)
 module.exports = mongoose.model('Group', groupSchema)

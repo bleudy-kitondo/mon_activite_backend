@@ -3,8 +3,8 @@ const bcrypt = require('bcrypt')
 const jwt = require('jwt-simple')
 require('dotenv').config()
 
-exports.findAllAdmin = (request, response) => {
-  Admin.find()
+exports.findAllAdmin = (request,response) => {
+  Admin.find({numberOfCongregationId: request.params.numberOfCongregationId})
     .then(admin => {
       response.status(200).json(admin)
     })
@@ -12,6 +12,7 @@ exports.findAllAdmin = (request, response) => {
       throw err
     })
 }
+
 exports.createAdmin = (request, response) => {
   const { userName, password, numberOfCongregationId } = request.body
   const hash = bcrypt.hashSync(password, 10)
@@ -29,6 +30,7 @@ exports.createAdmin = (request, response) => {
       throw err
     })
 }
+
 exports.deleteOneAdmin = (request, response) => {
   Admin.deleteOne({ _id: request.params.id })
     .then(() => {
