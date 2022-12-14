@@ -5,6 +5,7 @@ exports.sendOrFindRapport = async (request, response) => {
     $and: [
       { year: { $eq: request.body.year } },
       { month: { $eq: request.body.month } },
+      { proclamairId: { $eq: request.body.proclamairId } },
     ],
   })
     .then(rapport => {
@@ -48,8 +49,33 @@ exports.sendOrFindRapport = async (request, response) => {
     })
 }
 
-exports.getAllRapport = (request, response) => {
-  Rapport.find()
+exports.getByProclamair = (request, response) => {
+  Rapport.find({ proclamairId: request.params.proclamairId })
+    .then(rapport => {
+      response.status(200).json(rapport)
+    })
+    .catch(err => {
+      throw err
+    })
+}
+
+exports.getByYear = (request, response) => {
+  Rapport.find({ year: request.params.year })
+    .then(rapport => {
+      response.status(200).json(rapport)
+    })
+    .catch(err => {
+      throw err
+    })
+}
+
+exports.getByYearAndMonth = (request, response) => {
+  Rapport.find({
+    $and: [
+      { year: { $eq: request.params.year } },
+      { month: { $eq: request.params.month } },
+    ],
+  })
     .then(rapport => {
       response.status(200).json(rapport)
     })
