@@ -11,6 +11,10 @@ app.use(cors())
 
 app.use(express.json())
 
+app.get('/', (request, response) => {
+  response.send('welcome to your activity report api')
+})
+
 app.use('/api/congregation', congregRoutes)
 app.use('/api/group', groupRoutes)
 app.use('/api/proclamair', proclamairRoutes)

@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "engeine": {
+    "node":">= 16.0"
+  },
   "scripts": {
     "test": "npm start",
     "start": "nodemon server.js"
