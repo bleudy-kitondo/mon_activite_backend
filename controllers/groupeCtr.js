@@ -32,7 +32,7 @@ exports.createOrFind = (request, response) => {
   })
 }
 
-exports.getgroup = (response) => {
+exports.getgroup = (request, response) => {
   Group.find()
     .then(data => {
       response.status(200).json(data)
@@ -40,12 +40,12 @@ exports.getgroup = (response) => {
     .catch(err => console.log(err))
 }
 
-exports.getBycongregationId = (request, response) =>{
-  Group.find({congregationId: request.params.congregationId})
-  .then(group =>{
-    response.status(200).json(group)
-  })
-  .catch(err => console.log("err:",err))
+exports.getBycongregationId = (request, response) => {
+  Group.find({ congregationId: request.params.congregationId })
+    .then(group => {
+      response.status(200).json(group)
+    })
+    .catch(err => console.log('err:', err))
 }
 
 exports.deleteGroup = (request, response) => {

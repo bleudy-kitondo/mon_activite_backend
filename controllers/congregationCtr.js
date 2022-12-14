@@ -32,7 +32,7 @@ exports.deleteCongregation = (request, response) => {
     })
 }
 
-exports.getCongregation = (response) => {
+exports.getCongregation = (request,response) => {
   Congregation.find()
     .then(conversation => {
       response.status(200).json(conversation)

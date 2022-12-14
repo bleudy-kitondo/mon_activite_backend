@@ -3,8 +3,18 @@ const bcrypt = require('bcrypt')
 const jwt = require('jwt-simple')
 require('dotenv').config()
 
-exports.findAllAdmin = (request,response) => {
-  Admin.find({numberOfCongregationId: request.params.numberOfCongregationId})
+exports.findByCongregationId = (request, response) => {
+  Admin.find({ numberOfCongregationId: request.params.numberOfCongregationId })
+    .then(admin => {
+      response.status(200).json(admin)
+    })
+    .catch(err => {
+      throw err
+    })
+}
+
+exports.findAllAdmin = (request, response) => {
+  Admin.find()
     .then(admin => {
       response.status(200).json(admin)
     })
