@@ -1,51 +1,61 @@
-const bcrypt = require('bcrypt')
-const Proclamiar = require('../modals/proclamair')
-const jwt = require('jwt-simple')
+const bcrypt = require('bcrypt'),
+  Proclamiar = require('../modals/proclamair'),
+  jwt = require('jwt-simple')
 require('dotenv').config()
 
-exports.createproclamair = (request, response) => {
-  bcrypt
-    .hash(request.body.password, 10)
-    .then(hash => {
-      const {
-        userName,
-        numberOfCongreg,
-        name,
-        lastName,
-        status,
-        sex,
-        phoneNumber,
-        birthYear,
-        baptismalYear,
-        picture,
-      } = request.body
-      const proclamair = new Proclamiar({
-        userName,
-        password: hash,
-        numberOfCongreg,
-        name,
-        lastName,
-        sex,
-        phoneNumber,
-        birthYear,
-        baptismalYear,
-        picture,
-        status,
-      })
-      proclamair
-        .save()
-        .then(data => {
-          response.status(200).json(data)
-        })
-        .catch(err => {
-          throw err
-        })
+exports.createOrFindProclamair = async (request, response) => {
+  await Proclamiar.findOne({
+    $and: [
+      { userName: { $eq: request.body.userName } },
+      { numberOfCongreg: { $eq: request.body.numberOfCongreg } },
+      { birthYear: { $eq: request.body.birthYear } },
+    ],
+  })
+    .then(data => {
+      if (!data) {
+        const hash = bcrypt.hashSync(request.body.password, 10),
+          {
+            userName,
+            numberOfCongreg,
+            name,
+            lastName,
+            status,
+            sex,
+            phoneNumber,
+            birthYear,
+            baptismalYear,
+            picture,
+            groupId,
+          } = request.body,
+          proclamair = new Proclamiar({
+            userName,
+            password: hash,
+            numberOfCongreg,
+            name,
+            lastName,
+            sex,
+            phoneNumber,
+            birthYear,
+            baptismalYear,
+            picture,
+            status,
+            groupId,
+          })
+        proclamair
+          .save()
+          .then(proclamair => {
+            response.status(200).json({ message: 'proclamair creaded', proclamair })
+          })
+          .catch(err => console.log(err))
+      } else {
+        response.status(201).json({ message: 'proclamair found', data })
+      }
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log('err:', err))
 }
 
 exports.getAllproclamair = (request, response) => {
-  Proclamiar.find()
+  Proclamiar.find({ numberOfCongreg: request.params.numberOfCongreg })
     .then(proclamair => {
       response.status(200).json(proclamair)
     })
@@ -53,6 +63,27 @@ exports.getAllproclamair = (request, response) => {
       throw err
     })
 }
+
+exports.getByGroupId = (request, response) => {
+  Proclamiar.find({ groupId: request.params.groupId })
+    .then(proclamair => {
+      response.status(200).json(proclamair)
+    })
+    .catch(err => {
+      throw err
+    })
+}
+
+exports.getByStatus = (request, response) => {
+  Proclamiar.find({ status: request.params.status })
+    .then(proclamair => {
+      response.status(200).json(proclamair)
+    })
+    .catch(err => {
+      throw err
+    })
+}
+
 exports.deleteProclamair = (request, response) => {
   Proclamiar.deleteOne({ _id: request.params.id })
     .then(() => {
@@ -62,6 +93,7 @@ exports.deleteProclamair = (request, response) => {
       throw err
     })
 }
+
 exports.updateProclamair = (request, response) => {
   Proclamiar.updateOne(
     { _id: request.params.id },
@@ -74,6 +106,7 @@ exports.updateProclamair = (request, response) => {
       throw err
     })
 }
+
 exports.singinproclamair = (request, response) => {
   Proclamiar.findOne({ userName: request.body.userName })
     .then(proclamair => {

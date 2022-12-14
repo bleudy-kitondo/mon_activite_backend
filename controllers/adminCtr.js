@@ -50,6 +50,7 @@ exports.deleteOneAdmin = (request, response) => {
       throw err
     })
 }
+
 exports.modifyOneAdmin = (request, response) => {
   Admin.updateOne({ _id: request.params.id }, { ...request.body, _id: request.params.id })
     .then(() => {
