@@ -4,17 +4,16 @@ exports.findOrCreateCongregation = (request, response) => {
   Congregation.findOne({ number: request.params.number })
     .then(congregation => {
       if (!congregation) {
-        const { number, coordinator } = request.body
+        const { number, coordinator, name } = request.body
         const congreg = new Congregation({
           number,
           coordinator,
+          name,
         })
         congreg
           .save()
           .then(data => {
-            response
-              .status(201)
-              .json(`${data} is successfully created`)
+            response.status(201).json(`${data} is successfully created`)
           })
           .catch(err => console.log(err))
       } else {
@@ -41,10 +40,14 @@ exports.getCongregation = (request, response) => {
       throw err
     })
 }
+
 exports.updateCongregation = (request, response) => {
   Congregation.updateOne(
     { _id: request.params.id },
     { ...request.body, _id: request.params.id },
-  ).then(()=> response.status(200).json(`succesfully updated`))
-  .catch(err =>{throw err})
+  )
+    .then(() => response.status(200).json(`succesfully updated`))
+    .catch(err => {
+      throw err
+    })
 }

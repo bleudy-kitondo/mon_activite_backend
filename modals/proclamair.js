@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-// const validator = require('mongoose-unique-validator')
+
 const proclamairSchema = mongoose.Schema({
   userName: {
     type: String,
@@ -55,9 +55,8 @@ const proclamairSchema = mongoose.Schema({
   },
   status: {
     type: String,
-    default: 'proclamair',
+    default: 'proclamateur',
   },
 })
 
-// proclamairSchema.plugin(validator)
 module.exports = mongoose.model('Proclamair', proclamairSchema)
