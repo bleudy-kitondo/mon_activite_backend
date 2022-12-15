@@ -3,8 +3,8 @@ const Group = require('../modals/group')
 exports.createOrFind = (request, response) => {
   Group.findOne({
     $and: [
-      { congregationId: { $eq: request.params.congregationId } },
-      { number: { $eq: request.params.number } },
+      { congregationId: { $eq: request.body.congregationId } },
+      { number: { $eq: request.body.number } },
     ],
   }).then(data => {
     if (!data) {
