@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const proclamairCtr = require('../controllers/proclamairCtr')
 
-router.get('/create', proclamairCtr.createOrFindProclamair)
+router.post('/create', proclamairCtr.createOrFindProclamair)
 router.get('/find/:numberOfCongreg', proclamairCtr.getAllproclamair)
 router.get('/group/:groupId', proclamairCtr.getByGroupId)
 router.get('/status/:status', proclamairCtr.getByStatus)

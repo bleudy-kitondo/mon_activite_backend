@@ -4,7 +4,7 @@ const proclamairSchema = mongoose.Schema({
   userName: {
     type: String,
     required: true,
-    max: 20,
+    max: 40,
   },
   password: {
     type: String,
@@ -30,7 +30,6 @@ const proclamairSchema = mongoose.Schema({
   picture: {
     type: String,
     required: true,
-    max: 20,
   },
   sex: {
     type: String,

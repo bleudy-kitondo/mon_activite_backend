@@ -1,7 +1,7 @@
 const Congregation = require('../modals/congregation')
 
 exports.findOrCreateCongregation = (request, response) => {
-  Congregation.findOne({ number: request.params.number })
+  Congregation.findOne({ number: request.body.number })
     .then(congregation => {
       if (!congregation) {
         const { number, coordinator, name } = request.body
