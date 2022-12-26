@@ -111,7 +111,9 @@ exports.singinproclamair = (request, response) => {
   Proclamiar.findOne({ userName: request.body.userName })
     .then(proclamair => {
       if (!proclamair) {
-        response.status(400).json(`nom d'utilisateur  ou mot de passe incorrect`)
+        response
+          .status(400)
+          .json({ message: "nom d'utilisateur ou mot de passe incorrect" })
       } else {
         const jwt_payload = {
           id: proclamair._id,
@@ -132,22 +134,27 @@ exports.singinproclamair = (request, response) => {
           .compare(request.body.password, proclamair.password)
           .then(valid => {
             if (!valid) {
-              response.status(400).json(`nom d'utilisateur ou mot de passe incorrect`)
+              response
+                .status(400)
+                .json({ message: "nom d'utilisateur ou mot de passe incorrect" })
             } else {
               delete proclamair.password
               response.status(200).json({
-                token: `bearer ${token}`,
-                id: proclamair._id,
-                userName: proclamair.userName,
-                numberOfCongreg: proclamair.numberOfCongreg,
-                name: proclamair.name,
-                lastName: proclamair.lastName,
-                status: proclamair.status,
-                sex: proclamair.sex,
-                phoneNumber: proclamair.phoneNumber,
-                birthYear: proclamair.birthYear,
-                baptismalYear: proclamair.baptismalYear,
-                picture: proclamair.picture,
+                message: 'connecté',
+                data: {
+                  token: `bearer ${token}`,
+                  id: proclamair._id,
+                  userName: proclamair.userName,
+                  numberOfCongreg: proclamair.numberOfCongreg,
+                  name: proclamair.name,
+                  lastName: proclamair.lastName,
+                  status: proclamair.status,
+                  sex: proclamair.sex,
+                  phoneNumber: proclamair.phoneNumber,
+                  birthYear: proclamair.birthYear,
+                  baptismalYear: proclamair.baptismalYear,
+                  picture: proclamair.picture,
+                },
               })
             }
           })
