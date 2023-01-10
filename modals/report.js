@@ -17,9 +17,11 @@ const reportSchema = mongoose.Schema(
     },
     publication: {
       type: Number,
+      default: 0,
     },
     video: {
       type: Number,
+      default: 0,
     },
     time: {
       type: Number,
@@ -27,9 +29,11 @@ const reportSchema = mongoose.Schema(
     },
     visit: {
       type: Number,
+      default: 0,
     },
     course: {
       type: Number,
+      default: 0,
     },
     note: {
       type: String,

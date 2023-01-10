@@ -1,3 +1,4 @@
+const { request, response } = require('express')
 const Congregation = require('../modals/congregation')
 
 exports.findOrCreateCongregation = (request, response) => {
@@ -35,6 +36,15 @@ exports.getCongregation = (request, response) => {
   Congregation.find()
     .then(conversation => {
       response.status(200).json(conversation)
+    })
+    .catch(err => {
+      throw err
+    })
+}
+exports.findOneCongregation = (request, response) => {
+  Congregation.findOne({ number: request.params.number })
+    .then(data => {
+      response.status(200).json(data)
     })
     .catch(err => {
       throw err

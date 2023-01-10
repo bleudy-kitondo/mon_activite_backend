@@ -6,5 +6,6 @@ router.post('/create', congregCtr.findOrCreateCongregation)
 router.get('/find', congregCtr.getCongregation)
 router.delete('/delete/:id', congregCtr.deleteCongregation)
 router.put('/update/:id', congregCtr.updateCongregation)
+router.get('/findone/:number', congregCtr.findOneCongregation)
 
 module.exports = router

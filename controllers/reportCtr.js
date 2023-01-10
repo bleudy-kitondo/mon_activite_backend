@@ -35,13 +35,13 @@ exports.sendOrFindRapport = async (request, response) => {
         newrapport
           .save()
           .then(data => {
-            response.status(200).json(`${data} created`)
+            response.status(200).json({ message: 'rapport envoyé', data })
           })
           .catch(err => {
             throw err
           })
       } else {
-        response.status(200).json(`${report} exist`)
+        response.status(200).json({ message: 'rapport deja envoyé' })
       }
     })
     .catch(err => {
